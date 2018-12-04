@@ -6,8 +6,10 @@ use App\KeyValueStoreArray;
 
 echo "Start store in array with [\'a\'=>\'a_value\', \'b\'=>\'b_value\', \'c\'=>\'c_value\'] \n";
 echo "---------------------------------------------------------------------------------------\n";
+
 $storeArr = new KeyValueStoreArray(['a'=>'a_value', 'b'=>'b_value', 'c'=>'c_value']);
 //$storeArr = new KeyValueStoreArray(1);
+
 
 echo "Get value for all exists keys \n";
 echo "-----------------------------------\n";
