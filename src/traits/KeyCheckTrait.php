@@ -8,11 +8,11 @@ class KeyCheckTrait
     /**
      * @param $key
      */
-    public function keyValidate($key)
+    static public function keyValidate($key)
     {
         if(is_string($key) || is_int($key)) {
             return true;
         }
-        throw new KeyCheckException(\sprintf("You can't use %s type for key", gettype($key)))
+        throw new KeyCheckException(\sprintf("You can't use %s type for key", gettype($key)));
     }
 }
