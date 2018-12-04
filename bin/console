@@ -99,3 +99,54 @@ $storeJSON->set('c', 'c_value');
 echo "\n";
 echo "Complete store in JSON-file \n";
 echo "---------------------------------------------------------------------------------------\n";
+
+echo "\n";
+echo "Start store in YAML-file with './data/data.yaml' \n";
+echo "---------------------------------------------------------------------------------------\n";
+
+$storeYAML = new \App\KeyValueStoreYAML('./data/data.yml');
+
+echo "Get value for all exists keys \n";
+echo "-----------------------------------\n";
+print($storeYAML->get('a') . "\n");
+print($storeYAML->get('b') . "\n");
+print($storeYAML->get('c') . "\n");
+
+echo "\n";
+echo "Get value for non-exists key 'd' \n";
+echo "-----------------------------------\n";
+var_dump($storeYAML->get('d'));
+
+echo "\n";
+echo "Check keys 'a' and 'd' in array \n";
+echo "-----------------------------------\n";
+var_dump($storeYAML->has('a'));
+var_dump($storeYAML->has('d'));
+
+echo "\n";
+echo "Set value 'd_value' with key = 'd' and change value to 'new_a' with key 'a' \n";
+echo "-----------------------------------\n";
+$storeYAML->set('a', 'new_a');
+$storeYAML->set('d', 'd_value');
+print($storeYAML->get('a') . "\n");
+print($storeYAML->get('d') . "\n");
+
+echo "\n";
+echo "Clear array and get values \n";
+echo "-----------------------------------\n";
+$storeYAML->clear();
+var_dump($storeYAML->get('a'));
+var_dump($storeYAML->get('b'));
+var_dump($storeYAML->get('c'));
+var_dump($storeYAML->get('d'));
+
+echo "\n";
+echo "Set file to init state \n";
+echo "-----------------------------------\n";
+$storeYAML->set('a', 'a_value');
+$storeYAML->set('b', 'b_value');
+$storeYAML->set('c', 'c_value');
+
+echo "\n";
+echo "Complete store in YAML-file \n";
+echo "---------------------------------------------------------------------------------------\n";

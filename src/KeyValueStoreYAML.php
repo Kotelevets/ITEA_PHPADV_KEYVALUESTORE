@@ -2,9 +2,20 @@
 
 namespace App;
 
+use App\traits\KeyCheckTrait;
+use Symfony\Component\Yaml\Yaml;
 
 final class KeyValueStoreYAML implements KeyValueStoreInterface
 {
+    private $filename;
+    private $storeArr;
+
+    public function __construct($filename)
+    {
+        // TODO: Filename exception logic
+        $this->filename = $filename;
+        $this->storeArr = $this->openFromFile();
+    }
 
     /**
      * Stores value by key.
@@ -14,8 +25,9 @@ final class KeyValueStoreYAML implements KeyValueStoreInterface
      */
     public function set($key, $value)
     {
-        // TODO: Implement set() method.
         KeyCheckTrait::keyValidate($key);
+        $this->storeArr[$key] = $value;
+        $this->saveToFile();
     }
 
     /**
@@ -56,8 +68,11 @@ final class KeyValueStoreYAML implements KeyValueStoreInterface
      */
     public function remove($key)
     {
-        // TODO: Implement remove() method.
         KeyCheckTrait::keyValidate($key);
+        if($this->has($key)) {
+            unset($this->storeArr[$key]);
+            $this->saveToFile();
+        }
     }
 
     /**
@@ -65,6 +80,17 @@ final class KeyValueStoreYAML implements KeyValueStoreInterface
      */
     public function clear()
     {
-        // TODO: Implement clear() method.
+        $this->storeArr = [];
+        $this->saveToFile();
+    }
+
+    private function openFromFile()
+    {
+        return Yaml::parseFile($this->filename);
+    }
+
+    private function saveToFile()
+    {
+        return file_put_contents($this->filename, Yaml::dump($this->storeArr));
     }
 }

@@ -11,7 +11,7 @@ final class KeyValueStoreJSON implements KeyValueStoreInterface
 
     public function __construct($filename)
     {
-        // TODO: Filename logic
+        // TODO: Filename exception logic
         $this->filename = $filename;
         $this->storeArr = $this->openFromFile();
     }
