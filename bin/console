@@ -2,5 +2,47 @@
 <?php
 
 require_once __DIR__ . '/../vendor/autoload.php';
+use App\KeyValueStoreArray;
 
+echo "Start store in array with [\'a\'=>\'a_value\', \'b\'=>\'b_value\', \'c\'=>\'c_value\'] \n";
+echo "---------------------------------------------------------------------------------------\n";
+//$storeArr = new KeyValueStoreArray(['a'=>'a_value', 'b'=>'b_value', 'c'=>'c_value']);
+$storeArr = new KeyValueStoreArray(1);
 
+echo "Get value for all exists keys \n";
+echo "-----------------------------------\n";
+print($storeArr->get('a') . "\n");
+print($storeArr->get('b') . "\n");
+print($storeArr->get('c') . "\n");
+
+echo "\n";
+echo "Get value for non-exists key 'd' \n";
+echo "-----------------------------------\n";
+var_dump($storeArr->get('d'));
+
+echo "\n";
+echo "Check keys 'a' and 'd' in array \n";
+echo "-----------------------------------\n";
+var_dump($storeArr->has('a'));
+var_dump($storeArr->has('d'));
+
+echo "\n";
+echo "Set value 'd_value' with key = 'd' and change value to 'new_a' with key 'a' \n";
+echo "-----------------------------------\n";
+$storeArr->set('a', 'new_a');
+$storeArr->set('d', 'd_value');
+print($storeArr->get('a') . "\n");
+print($storeArr->get('d') . "\n");
+
+echo "\n";
+echo "Clear array and get values \n";
+echo "-----------------------------------\n";
+$storeArr->clear();
+var_dump($storeArr->get('a'));
+var_dump($storeArr->get('b'));
+var_dump($storeArr->get('c'));
+var_dump($storeArr->get('d'));
+
+echo "\n";
+echo "Complete store in array with [\'a\'=>\'a_value\', \'b\'=>\'b_value\', \'c\'=>\'c_value\'] \n";
+echo "---------------------------------------------------------------------------------------\n";
