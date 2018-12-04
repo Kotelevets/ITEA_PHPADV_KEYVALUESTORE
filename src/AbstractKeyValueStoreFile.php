@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\exceptions\KeyValueStoreDirException;
+use App\exceptions\KeyValueStoreFileException;
 use App\traits\KeyCheckTrait;
 
 abstract class AbstractKeyValueStoreFile implements KeyValueStoreInterface
@@ -12,8 +14,14 @@ abstract class AbstractKeyValueStoreFile implements KeyValueStoreInterface
     public function __construct($filename)
     {
         // TODO: Filename exception logic
-        $this->filename = $filename;
-        $this->storeArr = $this->openFromFile();
+        if ("/"===\substr($filename, -1)) {
+            throw new KeyValueStoreDirException(\sprintf("%s it's directory, enter filename", $filename));
+        } elseif (!\file_exists($filename)) {
+            throw new KeyValueStoreFileException(\sprintf("File %s doesn't exists, enter right filename", $filename));
+        } else {
+            $this->filename = $filename;
+            $this->storeArr = $this->openFromFile();
+        }
     }
 
     /**
