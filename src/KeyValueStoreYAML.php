@@ -15,6 +15,7 @@ final class KeyValueStoreYAML implements KeyValueStoreInterface
     public function set($key, $value)
     {
         // TODO: Implement set() method.
+        KeyCheckTrait::keyValidate($key);
     }
 
     /**
@@ -28,7 +29,11 @@ final class KeyValueStoreYAML implements KeyValueStoreInterface
      */
     public function get($key, $default = null)
     {
-        // TODO: Implement get() method.
+        KeyCheckTrait::keyValidate($key);
+        if($this->has($key)) {
+            return $this->storeArr[$key];
+        }
+        return $default;
     }
 
     /**
@@ -40,7 +45,8 @@ final class KeyValueStoreYAML implements KeyValueStoreInterface
      */
     public function has($key): bool
     {
-        // TODO: Implement has() method.
+        KeyCheckTrait::keyValidate($key);
+        return array_key_exists($key, $this->storeArr);
     }
 
     /**
@@ -51,6 +57,7 @@ final class KeyValueStoreYAML implements KeyValueStoreInterface
     public function remove($key)
     {
         // TODO: Implement remove() method.
+        KeyCheckTrait::keyValidate($key);
     }
 
     /**

@@ -2,9 +2,19 @@
 
 namespace App;
 
+use App\traits\KeyCheckTrait;
 
 final class KeyValueStoreJSON implements KeyValueStoreInterface
 {
+    private $filename;
+    private $storeArr;
+
+    public function __construct($filename)
+    {
+        // TODO: Filename logic
+        $this->filename = $filename;
+        $this->storeArr = $this->openFromFile();
+    }
 
     /**
      * Stores value by key.
@@ -14,7 +24,9 @@ final class KeyValueStoreJSON implements KeyValueStoreInterface
      */
     public function set($key, $value)
     {
-        // TODO: Implement set() method.
+        KeyCheckTrait::keyValidate($key);
+        $this->storeArr[$key] = $value;
+        $this->saveToFile();
     }
 
     /**
@@ -28,7 +40,11 @@ final class KeyValueStoreJSON implements KeyValueStoreInterface
      */
     public function get($key, $default = null)
     {
-        // TODO: Implement get() method.
+        KeyCheckTrait::keyValidate($key);
+        if($this->has($key)) {
+            return $this->storeArr[$key];
+        }
+        return $default;
     }
 
     /**
@@ -40,7 +56,8 @@ final class KeyValueStoreJSON implements KeyValueStoreInterface
      */
     public function has($key): bool
     {
-        // TODO: Implement has() method.
+        KeyCheckTrait::keyValidate($key);
+        return array_key_exists($key, $this->storeArr);
     }
 
     /**
@@ -50,7 +67,11 @@ final class KeyValueStoreJSON implements KeyValueStoreInterface
      */
     public function remove($key)
     {
-        // TODO: Implement remove() method.
+        KeyCheckTrait::keyValidate($key);
+        if($this->has($key)) {
+            unset($this->storeArr[$key]);
+            $this->saveToFile();
+        }
     }
 
     /**
@@ -58,6 +79,17 @@ final class KeyValueStoreJSON implements KeyValueStoreInterface
      */
     public function clear()
     {
-        // TODO: Implement clear() method.
+        $this->storeArr = [];
+        $this->saveToFile();
+    }
+
+    private function openFromFile()
+    {
+        return json_decode(file_get_contents($this->filename), true);
+    }
+
+    private function saveToFile()
+    {
+        return file_put_contents($this->filename, json_encode($this->storeArr));
     }
 }

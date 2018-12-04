@@ -48,3 +48,54 @@ var_dump($storeArr->get('d'));
 echo "\n";
 echo "Complete store in array with [\'a\'=>\'a_value\', \'b\'=>\'b_value\', \'c\'=>\'c_value\'] \n";
 echo "---------------------------------------------------------------------------------------\n";
+
+echo "\n";
+echo "Start store in JSON-file with './data/data.json' \n";
+echo "---------------------------------------------------------------------------------------\n";
+
+$storeJSON = new \App\KeyValueStoreJSON('./data/data.json');
+
+echo "Get value for all exists keys \n";
+echo "-----------------------------------\n";
+print($storeJSON->get('a') . "\n");
+print($storeJSON->get('b') . "\n");
+print($storeJSON->get('c') . "\n");
+
+echo "\n";
+echo "Get value for non-exists key 'd' \n";
+echo "-----------------------------------\n";
+var_dump($storeJSON->get('d'));
+
+echo "\n";
+echo "Check keys 'a' and 'd' in array \n";
+echo "-----------------------------------\n";
+var_dump($storeJSON->has('a'));
+var_dump($storeJSON->has('d'));
+
+echo "\n";
+echo "Set value 'd_value' with key = 'd' and change value to 'new_a' with key 'a' \n";
+echo "-----------------------------------\n";
+$storeJSON->set('a', 'new_a');
+$storeJSON->set('d', 'd_value');
+print($storeJSON->get('a') . "\n");
+print($storeJSON->get('d') . "\n");
+
+echo "\n";
+echo "Clear array and get values \n";
+echo "-----------------------------------\n";
+$storeJSON->clear();
+var_dump($storeJSON->get('a'));
+var_dump($storeJSON->get('b'));
+var_dump($storeJSON->get('c'));
+var_dump($storeJSON->get('d'));
+
+echo "\n";
+echo "Set file to init state \n";
+echo "-----------------------------------\n";
+$storeJSON->set('a', 'a_value');
+$storeJSON->set('b', 'b_value');
+$storeJSON->set('c', 'c_value');
+
+echo "\n";
+echo "Complete store in JSON-file \n";
+echo "---------------------------------------------------------------------------------------\n";
