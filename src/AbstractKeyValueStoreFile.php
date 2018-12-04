@@ -21,6 +21,9 @@ abstract class AbstractKeyValueStoreFile implements KeyValueStoreInterface
         } else {
             $this->filename = $filename;
             $this->storeArr = $this->openFromFile();
+            if(is_null($this->storeArr)){
+                $this->storeArr = [];
+            }
         }
     }
 
@@ -102,3 +105,4 @@ abstract class AbstractKeyValueStoreFile implements KeyValueStoreInterface
     abstract protected function saveToFile();
 
 }
+
